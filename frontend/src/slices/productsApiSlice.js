@@ -24,7 +24,7 @@ export const productSlice = apiSlice.injectEndpoints({
     // useGetProductDetailsQuery func
     getProductDetails: builder.query({
       query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}`,
+        url: `${PRODUCTS_URL}/${productId}/`,
       }),
       keepUnusedDataFor: 5,
     }),
@@ -38,7 +38,7 @@ export const productSlice = apiSlice.injectEndpoints({
     }),
     updateProduct: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTS_URL}/${data.productId}`,
+        url: `${PRODUCTS_URL}/${data.productId}/`,
         method: 'PUT',
         body: data,
       }),
@@ -47,7 +47,7 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin upload pic builder
     uploadProductImage: builder.mutation({
       query: (data) => ({
-        url: `/api/uploads`,
+        url: `/api/uploads/`,
         method: 'POST',
         body: data,
       }),
@@ -55,21 +55,21 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin useDeleteProductMutation func (delete product)
     deleteProduct: builder.mutation({
       query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}`,
+        url: `${PRODUCTS_URL}/${productId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Product'], // for cache invalidation
     }),
     createReview: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTS_URL}/${data.productId}/reviews`,
+        url: `${PRODUCTS_URL}/${data.productId}/reviews/`,
         method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Product'],
     }),
     getTopProducts: builder.query({
-      query: () => `${PRODUCTS_URL}/top`,
+      query: () => `${PRODUCTS_URL}/top/`,
       keepUnusedDataFor: 5,
     }),
     // update product countInStock

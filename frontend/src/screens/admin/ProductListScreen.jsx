@@ -6,18 +6,20 @@ import Message from '../../components/Message';
 import Loader from '../../components/Loader';
 import Paginate from '../../components/Paginate';
 import {
-  useGetProductsQuery,
+  useGetAllProductsQuery,
   useDeleteProductMutation,
   useCreateProductMutation,
 } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
 
 const ProductListScreen = () => {
-  const { pageNumber } = useParams();
+  // const { pageNumber } = useParams();
 
-  const { data, isLoading, error, refetch } = useGetProductsQuery({
-    pageNumber,
-  });
+  // const { data, isLoading, error, refetch } = useGetProductsQuery({
+  //   pageNumber,
+  // });
+
+  const { data: products, isLoading, error, refetch } = useGetAllProductsQuery();
 
   const [deleteProduct, { isLoading: loadingDelete }] =
     useDeleteProductMutation();
@@ -28,7 +30,7 @@ const ProductListScreen = () => {
         await deleteProduct(id);
         refetch();
       } catch (err) {
-        toast.error(err?.data?.message || err.error);
+        toast.error(err?.data?.detail || err.error || err?.data?.message);
       }
     }
   };
@@ -42,7 +44,7 @@ const ProductListScreen = () => {
         await createProduct();
         refetch();
       } catch (err) {
-        toast.error(err?.data?.message || err.error);
+        toast.error(err?.data?.detail || err.error || err?.data?.message);
       }
     }
   };
@@ -65,7 +67,7 @@ const ProductListScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant='danger'>{error.data.message}</Message>
+        <Message variant='danger'>{error?.data?.detail || error.error || error?.data?.message}</Message>
       ) : (
         <>
           <Table striped bordered hover responsive className='table-sm'>
@@ -80,7 +82,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {data.products.map((product) => (
+              {products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -105,7 +107,7 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
+          {/* <Paginate pages={data.pages} page={data.page} isAdmin={true} /> */}
         </>
       )}
     </>
