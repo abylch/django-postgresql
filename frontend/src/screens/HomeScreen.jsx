@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom';
 import Product from '../components/Product';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-//import Paginate from '../components/Paginate';
+import Paginate from '../components/Paginate';
 //import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/Meta';
 
 const HomeScreen = () => {
-  // const { pageNumber, keyword } = useParams();
-  const { keyword } = useParams();
+  const { pageNumber, keyword } = useParams();
+  // const { keyword } = useParams();
 
-  const { data: products, isLoading, error } = useGetAllProductsQuery({
+  const { data, isLoading, error } = useGetAllProductsQuery({
     keyword,
-    // pageNumber,
+    pageNumber,
   });
 
   return (
@@ -38,17 +38,17 @@ const HomeScreen = () => {
           <Meta />
           <h1>Latest Products</h1>
           <Row>
-            {products.map((product) => (
+            {data.products.map((product) => (
               <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                 <Product product={product} />
               </Col>
             ))}
           </Row>
-          {/* <Paginate
+          <Paginate
             pages={data.pages}
             page={data.page}
             keyword={keyword ? keyword : ''}
-          /> */}
+          />
         </>
       )}
     </>

@@ -12,29 +12,31 @@ from base.serializers import *
 
 from rest_framework import status
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-@api_view(['POST'])
-@permission_classes([IsAdminUser])
-def createProduct(request):
-	user = request.user if request.user else "abylch@hotmail.com"
-	print('user from createProduct', user)
-	product = Product.objects.create(
-		user=user,
-		price=0.01,
-		description=''
-	)
-	serializer = ProductSerializer(product, many=False)
-	return Response(serializer.data)
 
 @api_view(['GET'])
 def getProducts(request):
 	query = request.query_params.get('keyword')
+	page = request.query_params.get('pageNumber')
 	print('query', query)
 	if query == None:
 		query = ''
 	products = Product.objects.filter(name__icontains=query)
+
+	paginator = Paginator(products, 8)
+	try:
+		products = paginator.page(page)
+	except PageNotAnInteger:
+		products = paginator.page(1)
+	except EmptyPage:
+		products = paginator.page(paginator.num_pages)
+	if page == None:
+		page = 1
+	page = int(page)
+
 	serializer = ProductSerializer(products, many=True)
-	return Response(serializer.data)
+	return Response({'products': serializer.data, 'page': page, 'pages': paginator.num_pages})
 
 @api_view(['GET'])
 def getProduct(request, pk):
@@ -68,6 +70,19 @@ def deleteProduct(request, pk):
 	product = Product.objects.get(_id=pk)
 	product.delete()
 	return Response('Producted Deleted')
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createProduct(request):
+	user = request.user if request.user else "abylch@hotmail.com"
+	print('user from createProduct', user)
+	product = Product.objects.create(
+		user=user,
+		price=0.01,
+		description=''
+	)
+	serializer = ProductSerializer(product, many=False)
+	return Response(serializer.data)
 
 @api_view(['POST'])
 def uploadImage(request):

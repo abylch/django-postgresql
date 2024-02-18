@@ -3,20 +3,20 @@ import { apiSlice } from './apiSlice';
 
 export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // useGetAllProductsQuery func get all products no pagination
+    // useGetAllProductsQuery func get all products pagination
     getAllProducts: builder.query({
-      query: (keyword) => ({
+      query: ({ keyword, pageNumber }) => ({
         url: `${PRODUCTS_URL}`,
         method: 'GET',
-        params: keyword,
+        params: { keyword, pageNumber },
       }),keepUnusedDataFor: 5,
       providesTags: ['Product'],
     }),
-    // useGetProductsQuery func
+    // useGetProductsQuery func no pagination
     getProducts: builder.query({
-      query: ({ keyword, pageNumber }) => ({
+      query: ({ keyword }) => ({
         url: PRODUCTS_URL,
-        params: { keyword, pageNumber },
+        params: { keyword },
       }),
       keepUnusedDataFor: 5,
       //providesTags: ['Product'], // for cache invalidation, removed in pagination

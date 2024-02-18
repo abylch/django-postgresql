@@ -18,18 +18,15 @@ import { useNavigate } from 'react-router-dom';
 
 
 const ProductListScreen = () => {
-  // const { pageNumber } = useParams();
+  const { pageNumber } = useParams();
 
-  // const { data, isLoading, error, refetch } = useGetProductsQuery({
-  //   pageNumber,
-  // });
+  const { data, isLoading, error, refetch } = useGetAllProductsQuery({
+    pageNumber,
+  });
 
   // userInfo state
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate(); // Get the navigate function from react-router-dom
-
-
-  const { data: products, isLoading, error, refetch } = useGetAllProductsQuery();
 
   const [deleteProduct, { isLoading: loadingDelete }] =
     useDeleteProductMutation();
@@ -100,7 +97,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {data.products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -125,7 +122,7 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          {/* <Paginate pages={data.pages} page={data.page} isAdmin={true} /> */}
+          <Paginate pages={data.pages} page={data.page} isAdmin={true} />
         </>
       )}
     </>
