@@ -5,10 +5,10 @@ export const productSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // useGetAllProductsQuery func get all products no pagination
     getAllProducts: builder.query({
-      query: () => ({
+      query: (keyword) => ({
         url: `${PRODUCTS_URL}`,
-        // url: `http://localhost:8000/api/products`,
         method: 'GET',
+        params: keyword,
       }),keepUnusedDataFor: 5,
       providesTags: ['Product'],
     }),
