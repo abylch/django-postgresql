@@ -72,10 +72,17 @@ const baseQuery = fetchBaseQuery({
 
 async function baseQueryWithAuth(args, api, extra) {
   const result = await baseQuery(args, api, extra);
+  console.log("from apiSlice.js args", args)
+  console.log("from apiSlice.js api", api)
+  console.log("from apiSlice.js extra", extra)
+  console.log("from apiSlice.js result", result)
+
   // Dispatch the logout action on 401.
   if (result.error && result.error.status === 401) {
     api.dispatch(logout());
   }
+  else console.log("error from apiSlice.js", result.error);
+
   return result;
 }
 

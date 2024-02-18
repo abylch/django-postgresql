@@ -31,14 +31,14 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin useCreateProductMutation func (create product)
     createProduct: builder.mutation({
       query: () => ({
-        url: `${PRODUCTS_URL}`,
+        url: `${PRODUCTS_URL}/create/`,
         method: 'POST',
       }),
       invalidatesTags: ['Product'],
     }),
     updateProduct: builder.mutation({
       query: (data) => ({
-        url: `${PRODUCTS_URL}/${data.productId}/`,
+        url: `${PRODUCTS_URL}/update/${data.productId}/`,
         method: 'PUT',
         body: data,
       }),
@@ -47,7 +47,7 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin upload pic builder
     uploadProductImage: builder.mutation({
       query: (data) => ({
-        url: `/api/uploads/`,
+        url: `${PRODUCTS_URL}/upload/`,
         method: 'POST',
         body: data,
       }),
@@ -55,7 +55,7 @@ export const productSlice = apiSlice.injectEndpoints({
     // admin useDeleteProductMutation func (delete product)
     deleteProduct: builder.mutation({
       query: (productId) => ({
-        url: `${PRODUCTS_URL}/${productId}/`,
+        url: `${PRODUCTS_URL}/delete/${productId}/`,
         method: 'DELETE',
       }),
       invalidatesTags: ['Product'], // for cache invalidation

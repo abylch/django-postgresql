@@ -12,12 +12,22 @@ import {
 } from '../../slices/productsApiSlice';
 import { toast } from 'react-toastify';
 
+// useSelector to get the userInfo state
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+
 const ProductListScreen = () => {
   // const { pageNumber } = useParams();
 
   // const { data, isLoading, error, refetch } = useGetProductsQuery({
   //   pageNumber,
   // });
+
+  // userInfo state
+  const { userInfo } = useSelector((state) => state.auth);
+  const navigate = useNavigate(); // Get the navigate function from react-router-dom
+
 
   const { data: products, isLoading, error, refetch } = useGetAllProductsQuery();
 
@@ -27,7 +37,9 @@ const ProductListScreen = () => {
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure')) {
       try {
-        await deleteProduct(id);
+        const res = await deleteProduct(id);
+        console.log("res from deleteHandler: ", res);
+        toast.success(res.data);
         refetch();
       } catch (err) {
         toast.error(err?.data?.detail || err.error || err?.data?.message);
@@ -39,10 +51,16 @@ const ProductListScreen = () => {
     useCreateProductMutation();
 
   const createProductHandler = async () => {
-    if (window.confirm('Are you sure you want to create a new product?')) {
+    if (window.confirm('Are you sure you want to create a new product template? and redirect to the new created template for editing it.')) {
       try {
-        await createProduct();
+        console.log("userInfo from createProductHandler: ", userInfo );
+        const data = userInfo;
+        const res = await createProduct().unwrap();
+        console.log("res from createProductHandler: ", res);
         refetch();
+        // /admin/product/${product._id}/edit
+        // Navigate to the edit page for the newly created product
+        navigate(`/admin/product/${res._id}/edit`);
       } catch (err) {
         toast.error(err?.data?.detail || err.error || err?.data?.message);
       }

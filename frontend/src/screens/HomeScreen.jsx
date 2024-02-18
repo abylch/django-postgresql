@@ -12,7 +12,7 @@ const HomeScreen = () => {
       {isLoading ? (
         <Loader/>
       ) : error ? (
-        <Message variant='danger'>{error?.data.message || error.error}</Message>
+        <Message variant='danger'>{error?.data?.detail || error.error || error?.data?.message}</Message>
       ) : (
         <>
           <h1>Latest Products</h1>
