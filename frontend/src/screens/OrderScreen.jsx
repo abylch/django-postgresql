@@ -16,7 +16,7 @@ import {
 const OrderScreen = () => {
   const { id: orderId } = useParams();
 
-  const {
+  let {
     data: order,
     refetch,
     isLoading,
@@ -24,6 +24,14 @@ const OrderScreen = () => {
   } = useGetOrderDetailsQuery(orderId);
 
   console.log("order from orderScreen:", order)
+  if (!isLoading && !error) {
+    const updatedOrder = {
+      ...order,
+      itemsPrice: order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2)
+    };
+    // Now you can use updatedOrder instead of order
+    order = updatedOrder;
+  }
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 

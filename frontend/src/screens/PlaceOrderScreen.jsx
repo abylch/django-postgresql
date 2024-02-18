@@ -36,10 +36,11 @@ const PlaceOrderScreen = () => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       }).unwrap();
+      toast.success('Order created successfully');
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (err) {
-      toast.error(err);
+      toast.error(err?.data?.detail || err.error || err?.data?.message);
     }
   };
 
@@ -129,11 +130,13 @@ const PlaceOrderScreen = () => {
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              <ListGroup.Item>
+              
                 {error && (
-                  <Message variant='danger'>{error.data.message}</Message>
+                  <ListGroup.Item>
+                  <Message variant='danger'>{error?.data?.detail || error.error || error?.data?.message}</Message>
+                  </ListGroup.Item>
                 )}
-              </ListGroup.Item>
+              
               <ListGroup.Item>
                 <Button
                   type='button'
