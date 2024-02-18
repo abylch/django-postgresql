@@ -61,7 +61,7 @@ const ProductScreen = () => {
       refetch();
       toast.success('Review created successfully');
     } catch (err) {
-      toast.error(err?.data?.message || err.error);
+      toast.error(err?.data?.detail || err.error || err?.data?.message);
     }
   };
 
@@ -74,7 +74,7 @@ const ProductScreen = () => {
         <Loader />
       ) : error ? (
         <Message variant='danger'>
-          {error?.data?.message || error.error}
+          {error?.data?.detail || error.error || error?.data?.message}
         </Message>
       ) : (
         <>
@@ -158,7 +158,7 @@ const ProductScreen = () => {
               </Card>
             </Col>
           </Row>
-          {/* <Row className='review'>
+          <Row className='review'>
             <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
@@ -220,7 +220,7 @@ const ProductScreen = () => {
                 </ListGroup.Item>
               </ListGroup>
             </Col>
-          </Row> */}
+          </Row>
         </>
       )}
     </>
