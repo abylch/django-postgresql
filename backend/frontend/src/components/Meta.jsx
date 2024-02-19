@@ -11,9 +11,9 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: 'Welcome To ProShop',
-  description: 'We sell the best products for cheap',
-  keywords: 'electronics, buy electronics, cheap electroincs',
+  title: 'abylch',
+  description: 'Customized eCommerce / Shopping Cart Application made with reactjs, django, postgres, redux-toolkit',
+  keywords: 'eCommerce, reactjs, django, postgres, redux, abylch',
 };
 
 export default Meta;
