@@ -51,7 +51,6 @@ const ProductListScreen = () => {
     if (window.confirm('Are you sure you want to create a new product template? and redirect to the new created template for editing it.')) {
       try {
         console.log("userInfo from createProductHandler: ", userInfo );
-        const data = userInfo;
         const res = await createProduct().unwrap();
         console.log("res from createProductHandler: ", res);
         refetch();

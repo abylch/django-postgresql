@@ -7,9 +7,9 @@ const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
 
   return isLoading ? null : error ? (
-    <Message variant='danger'>{error?.data?.message || error.error}</Message>
+    <Message variant='danger'>{error?.data?.detail || error.error || error?.data?.message}</Message>
   ) : (
-    <Carousel pause='hover' className='bg-primary mb-4'>
+    <Carousel pause='hover' className='mb-4 bg-dark'>
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>
