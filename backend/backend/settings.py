@@ -136,11 +136,32 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# for sqlite
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
+# for postgresql pgAdmin
+# from decouple import config
+# DATABASES = {
+# 	'default': {
+# 		'ENGINE': 'django.db.backends.postgresql',
+# 		'NAME': config("DATABASE"),
+# 		'USER': config("USERNAME"),
+# 		'PASSWORD': config("PASSWORD"),
+# 		'HOST': config("HOSTNAME"),
+# 		'PORT': config("PORT")
+# 	}
+# }
+
+# for render postgresql external connection
+import dj_database_url
+from decouple import config
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+	"default": dj_database_url.parse(config("DATABASE_URL"))
 }
 
 
@@ -202,5 +223,3 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALLOWED_HOSTS = ['*']
-
-
