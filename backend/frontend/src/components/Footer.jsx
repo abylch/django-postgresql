@@ -9,7 +9,7 @@ const Footer = () => {
         <Row>
           <Col className='text-center py-3'>
             <p>abylch &copy; {currentYear}</p>
-            <p>@e-Shop-Shop; e-commerce website using Django, React JS, Redux toolkit and PostgreSQL, e-commerce plataform template a work in progress, always evolving.</p>
+            <p>@e-Shop-Shop; e-commerce website using Django, React JS, Redux toolkit and PostgreSQL, and S3 bucket, e-commerce plataform template a work in progress, always evolving.</p>
           </Col>
         </Row>
       </Container>

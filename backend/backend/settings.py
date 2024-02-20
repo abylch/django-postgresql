@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "corsheaders",
     'django_extensions',
     'rest_framework_simplejwt',
+    'storages',
 
 ]
 
@@ -158,8 +159,8 @@ WSGI_APPLICATION = "backend.wsgi.application"
 # }
 
 # for render postgresql external connection
+# from decouple import config
 import dj_database_url
-from decouple import config
 DATABASES = {
 	"default": dj_database_url.parse(config("DATABASE_URL"))
 }
@@ -199,16 +200,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+
+# local storage settings
 STATIC_URL = "static/"
-MEDIA_URL = 'images'
 
 STATICFILES_DIRS = [
 	BASE_DIR / 'static',
     BASE_DIR / 'frontend/build/static'
 ]
-
 MEDIA_URL = '/images/'
-
 MEDIA_ROOT = 'static/images'
 
 # Default primary key field type
@@ -223,3 +223,13 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 ALLOWED_HOSTS = ['*']
+
+# blackblaze bucket, aws s3 compatible settings
+#from decouple import config
+
+DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
+AWS_ACCESS_KEY_ID = config("AWS_S3_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_S3_SECRET_ACCESS_KEY")
+AWS_S3_REGION_NAME = config("AWS_S3_REGION_NAME")
+AWS_S3_ENDPOINT_URL = config("AWS_S3_ENDPOINT_URL")
+AWS_STORAGE_BUCKET_NAME = config("AWS_PRIVATE_BUCKET_NAME")
