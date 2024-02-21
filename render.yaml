@@ -4,16 +4,9 @@ services:
     name: backend
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "python -m gunicorn backend.asgi:application -k uvicorn.workers.UvicornWorker"
+    startCommand: "./backend/python -m gunicorn backend.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: SECRET_KEY
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
-
-  - type: web
-    plan: free
-    name: frontend
-    runtime: node
-    buildCommand: "./frontend-build.sh"
-    startCommand: "npm run build"
