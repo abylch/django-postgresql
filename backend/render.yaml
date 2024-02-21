@@ -20,8 +20,12 @@ services:
         generateValue: true
       - key: WEB_CONCURRENCY
         value: 4
-  - name: frontend
-    type: web
+
+  - type: web
     plan: free
+    name: frontend
     runtime: node
-    buildCommand: cd frontend && npm install && npm run build
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
