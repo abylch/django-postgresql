@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-vx+^a0k!j#^!cxmdg4ej0+e%zzu+s@5y$c-g&x82(k+qilqrn$"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -99,7 +99,9 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -202,14 +204,20 @@ USE_TZ = True
 
 
 # local storage settings
-STATIC_URL = "static/"
-
 STATICFILES_DIRS = [
 	BASE_DIR / 'static',
     BASE_DIR / 'frontend/build/static'
 ]
+# local storage dev
+STATIC_URL = "static/"
 MEDIA_URL = '/images/'
 MEDIA_ROOT = 'static/images'
+
+# for production
+DEBUG = False
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+MEDIA_ROOT = BASE_DIR / 'static/images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Default primary key field type
@@ -221,13 +229,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "localhost",
+    "127.0.0.1",
 ]
 
-ALLOWED_HOSTS = ['*']
+# dev
+# ALLOWED_HOSTS = ['*']
 
 # blackblaze bucket, aws s3 compatible settings
 #from decouple import config
-
 DEFAULT_FILE_STORAGE = "storages.backends.s3.S3Storage"
 AWS_ACCESS_KEY_ID = config("AWS_S3_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_S3_SECRET_ACCESS_KEY")

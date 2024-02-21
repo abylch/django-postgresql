@@ -6,7 +6,11 @@
     "index.html": "/index.html",
     "main.86ed3dc0.css.map": "/static/css/main.86ed3dc0.css.map",
     "main.960bd45b.js.map": "/static/js/main.960bd45b.js.map",
-    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map"
+    "787.cda612ba.chunk.js.map": "/static/js/787.cda612ba.chunk.js.map",
+    "logo192.png": "/logo192.png",
+    "logo512.png": "/logo512.png",
+    "favicon.ico": "/favicon.ico",
+    "manifest.json": "/manifest.json"
   },
   "entrypoints": [
     "static/css/main.86ed3dc0.css",
