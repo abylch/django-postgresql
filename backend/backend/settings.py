@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from decouple import config
 from pathlib import Path
+from datetime import timedelta
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,7 +58,6 @@ REST_FRAMEWORK = {
 
 # Django project settings.py
 
-from datetime import timedelta
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
@@ -162,7 +163,7 @@ WSGI_APPLICATION = "backend.wsgi.application"
 
 # for render postgresql external connection
 # from decouple import config
-import dj_database_url
+# import dj_database_url
 DATABASES = {
 	"default": dj_database_url.parse(config("DATABASE_URL"))
 }
@@ -196,6 +197,8 @@ TIME_ZONE = "UTC"
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
@@ -204,20 +207,29 @@ USE_TZ = True
 
 
 # local storage settings
+STATIC_URL = '/static/'
+MEDIA_URL = '/images/'
+
 STATICFILES_DIRS = [
-	BASE_DIR / 'static',
+    BASE_DIR / 'static',
     BASE_DIR / 'frontend/build/static'
 ]
-# local storage dev
-STATIC_URL = "/static/"
-MEDIA_URL = '/images/'
-MEDIA_ROOT = 'static/images'
 
-# for production
-DEBUG = False
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+CORS_ALLOWED_ORIGINS = []
+CORS_ALLOW_ALL_ORIGINS = True
+
+
+# for production
+DEBUG = True
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", ]
+MEDIA_ROOT = BASE_DIR / 'static/images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # This production code might break development mode, so we check whether we're in DEBUG mode
 if not DEBUG:
     # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
@@ -241,13 +253,6 @@ if not DEBUG:
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost",
-    "http://127.0.0.1",
-]
 
 # dev
 # ALLOWED_HOSTS = ['*']
