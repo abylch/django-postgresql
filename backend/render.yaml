@@ -1,0 +1,12 @@
+services:
+  - name: backend
+    type: web
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn backend.wsgi:application -b 0.0.0.0
+
+  - name: frontend
+    type: web
+    buildCommand: npm install && npm run build
+    env:
+      - key: NODE_ENV
+        value: production
