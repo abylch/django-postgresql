@@ -4,7 +4,7 @@ services:
     name: backend
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "./backend/python -m gunicorn backend.asgi:application -k uvicorn.workers.UvicornWorker"
+    startCommand: "python -m gunicorn backend.asgi:application -k uvicorn.workers.UvicornWorker"
     envVars:
       - key: SECRET_KEY
         generateValue: true
