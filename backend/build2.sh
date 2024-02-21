@@ -15,6 +15,8 @@ cd frontend
 npm install
 npm run build
 
+cd ..
+
 # Convert static asset files
 python manage.py collectstatic --no-input
 
