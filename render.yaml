@@ -1,8 +1,8 @@
 databases:
-  - name: postgresql_srv
+  - name: db_store_32hg
     plan: free
-    databaseName: db_store_32hg
-    user: db_admin
+    databaseName: backend
+    user: backend
 
 services:
   - type: web
