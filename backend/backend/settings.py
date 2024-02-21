@@ -209,7 +209,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'frontend/build/static'
 ]
 # local storage dev
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 MEDIA_URL = '/images/'
 MEDIA_ROOT = 'static/images'
 
@@ -218,7 +218,8 @@ DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
+# and renames the files with unique names for each version to support long-term caching
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
