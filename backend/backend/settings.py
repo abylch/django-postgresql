@@ -225,7 +225,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 
 # for production
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1", "localhost", ]
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
