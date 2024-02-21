@@ -218,8 +218,23 @@ DEBUG = False
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 MEDIA_ROOT = BASE_DIR / 'static/images'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# and renames the files with unique names for each version to support long-term caching
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# This production code might break development mode, so we check whether we're in DEBUG mode
+if not DEBUG:
+    # Tell Django to copy static assets into a path called `staticfiles` (this is specific to Render)
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    # Enable the WhiteNoise storage backend, which compresses static files to reduce disk use
+    # and renames the files with unique names for each version to support long-term caching
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    # SECURITY WARNING: keep the secret key used in production secret!
+    SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+    RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+    # Django requires a suitable value for ALLOWED_HOSTS.
+    # You can get the name of your web service host from the RENDER_EXTERNAL_HOSTNAME
+    # environment variable, which is automatically set by Render.
+    if RENDER_EXTERNAL_HOSTNAME:
+        ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
