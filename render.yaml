@@ -26,3 +26,4 @@ services:
     name: frontend
     runtime: node
     buildCommand: "./frontend-build.sh"
+    startCommand: "npm run build"
