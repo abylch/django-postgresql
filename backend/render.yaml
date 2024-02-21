@@ -1,9 +1,3 @@
-databases:
-  - name: postgresql_srv
-    plan: free
-    databaseName: db_store_32hg
-    user: db_admin
-
 services:
   - type: web
     plan: free
