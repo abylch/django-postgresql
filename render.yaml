@@ -1,0 +1,28 @@
+databases:
+  - name: postgresql_srv
+    plan: free
+    databaseName: db_store_32hg
+    user: db_admin
+
+services:
+  - type: web
+    plan: free
+    name: backend
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "python -m gunicorn backend.asgi:application -k uvicorn.workers.UvicornWorker"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: db_store_32hg
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
+
+  - type: web
+    plan: free
+    name: frontend
+    runtime: node
+    buildCommand: "./frontend-build.sh"
